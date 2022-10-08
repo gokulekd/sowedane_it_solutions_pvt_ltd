@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:sowedane_it_solutions_pvt_ltd/user_signup.dart';
+import 'package:sowedane_it_solutions_pvt_ltd/view/user_signup.dart';
 
 class ScreenSplash extends StatelessWidget {
   const ScreenSplash({Key? key}) : super(key: key);

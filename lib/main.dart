@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sowedane_it_solutions_pvt_ltd/screen_splash.dart';
+import 'package:sowedane_it_solutions_pvt_ltd/view/screen_splash.dart';
 
 void main() {
   runApp(const MyApp());
