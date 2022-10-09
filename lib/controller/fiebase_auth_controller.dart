@@ -9,7 +9,7 @@ import 'package:sowedane_it_solutions_pvt_ltd/constant/colors.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/model/user_model.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/view/screen_home_page.dart';
 
-class FirebaseController {
+class FirebaseController extends GetxController {
   final FirebaseAuth firebase = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -47,6 +47,8 @@ class FirebaseController {
     } catch (e) {
       log(e.toString());
     }
+
+    update();
   }
 
   firebaseUserLogin(String email, String password) async {
@@ -71,7 +73,6 @@ class FirebaseController {
   Future gooleSignOUt() async {
     try {
       await googleSignIn.signOut();
-      await FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (e) {
       Get.snackbar("error", e.message.toString(),
           backgroundColor: kRed, colorText: kWhite);
@@ -98,7 +99,6 @@ class FirebaseController {
       await FirebaseAuth.instance
           .signInWithCredential(credential)
           .then((value) async {
-        Get.to(() => const ScreenHomePage());
         final UserModel data = UserModel(
           uid: value.user!.uid,
           username: value.user!.displayName!,
@@ -110,21 +110,13 @@ class FirebaseController {
             .collection("userData")
             .doc(value.user!.uid)
             .set(data.toJson());
-
+        Get.offAll(() => const ScreenHomePage());
         Get.snackbar("Done",
             "Registration of  ${value.user!.email.toString()} is successful",
             backgroundColor: kGreen, colorText: kWhite);
+        update();
         return value;
       });
-      showDialog(
-        context: context,
-        builder: (context) => const Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
-        ),
-      );
     } on FirebaseAuthException catch (e) {
       Get.snackbar("error", e.message.toString(),
           backgroundColor: kRed, colorText: kWhite);

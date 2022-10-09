@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebaseauth;
+import 'package:sowedane_it_solutions_pvt_ltd/constant/colors.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/view/screen_home_page.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/view/screen_signup_login_navigate.dart';
 
@@ -15,12 +16,9 @@ class FirebaseAuthPage extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               return const ScreenHomePage();
-            } else if (snapshot.data == null) {
+            } else {
               return const ScreenSignupLoginNavigate();
             }
-            return const Center(
-                child:
-                    SizedBox(height: 50, child: CircularProgressIndicator()));
           },
         ),
       ),

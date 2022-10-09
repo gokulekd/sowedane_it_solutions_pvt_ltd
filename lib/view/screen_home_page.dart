@@ -3,9 +3,11 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/constant/colors.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/controller/fiebase_auth_controller.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/model/user_model.dart';
+import 'package:sowedane_it_solutions_pvt_ltd/view/screen_signup_login_navigate.dart';
 
 class ScreenHomePage extends StatelessWidget {
   const ScreenHomePage({Key? key}) : super(key: key);
@@ -46,7 +48,17 @@ class ScreenHomePage extends StatelessWidget {
                     Center(
                       child: ElevatedButton(
                         onPressed: () async {
-                          await FirebaseController().gooleSignOUt();
+
+
+                          FirebaseController().gooleSignOUt();
+                          await FirebaseAuth.instance
+                              .signOut()
+                              .then((value) async {
+                                Get.offAll(()=>const ScreenSignupLoginNavigate());
+                            Get.snackbar("Message", "User Log out Success",
+                                backgroundColor: kGreen,
+                                colorText: Colors.white);
+                          });
                         },
                         style: ElevatedButton.styleFrom(
                           primary: kOrange,
@@ -68,25 +80,8 @@ class ScreenHomePage extends StatelessWidget {
                   ],
                 ),
               );
-            } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: SizedBox(
-                  height: 50,
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            } else if (snapshot.hasError) {
-              log(snapshot.error.toString());
-              return const Center(
-                child: SizedBox(
-                  height: 50,
-                  child: CircularProgressIndicator(),
-                ),
-              );
             }
-            return const Center(
-              child: Text("No data"),
-            );
+            return const Text("No data");
           },
         ),
       ),

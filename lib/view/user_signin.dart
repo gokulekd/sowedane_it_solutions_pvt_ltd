@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:sign_button/sign_button.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/constant/colors.dart';
@@ -84,11 +86,14 @@ class ScreenSignIn extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    if (usernameContoller.text.trim().isNotEmpty &&
-                        passwordController.text.trim().isNotEmpty) {
-                      FirebaseController().firebaseUserLogin(
-                          usernameContoller.text.trim(),
-                          passwordController.text.trim());
+                    final String username = usernameContoller.text.trim();
+                    final String password = passwordController.text.trim();
+                    if (username.isEmpty || password.isEmpty) {
+                      Get.snackbar("Error", "all field required",
+                          backgroundColor: kRed, colorText: kWhite);
+                    } else if (username.isNotEmpty && password.isNotEmpty) {
+                      FirebaseController()
+                          .firebaseUserLogin(username, password);
                     }
                   },
                   style: ElevatedButton.styleFrom(

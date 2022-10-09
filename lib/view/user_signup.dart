@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sign_button/sign_button.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/constant/colors.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/controller/fiebase_auth_controller.dart';
@@ -145,7 +146,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                     final email = emailController.text.trim();
                     final password = passwordController.text.trim();
 
-                    if (username.isNotEmpty &&
+                    if (username.isEmpty || password.isEmpty || email.isEmpty) {
+                      Get.snackbar("Error", "all field required",
+                          backgroundColor: kRed, colorText: kWhite);
+                    } else if (username.isNotEmpty &&
                         email.isNotEmpty &&
                         password.isNotEmpty) {
                       await firebase.firebseUserRegister(
