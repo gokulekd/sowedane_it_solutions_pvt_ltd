@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1079278974465",
+    "project_id": "sowedane-it-solutions-pvt-ltd",
+    "storage_bucket": "sowedane-it-solutions-pvt-ltd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079278974465:android:428c4bc4d3e0bd664db200",
+        "android_client_info": {
+          "package_name": "com.example.sowedane_it_solutions_pvt_ltd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079278974465-ficn3c8llsfj57b449hen83q84487ukq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASXCuXK7S9gNwJkqbF6Fj2vUuooIKl1_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1079278974465-ficn3c8llsfj57b449hen83q84487ukq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

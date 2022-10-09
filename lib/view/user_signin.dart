@@ -4,9 +4,15 @@ import 'package:flutter/material.dart';
 
 import 'package:sign_button/sign_button.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/constant/colors.dart';
+import 'package:sowedane_it_solutions_pvt_ltd/controller/fiebase_auth_controller.dart';
+import 'package:sowedane_it_solutions_pvt_ltd/view/widgets/commen_textform_field.dart';
 
+// ignore: must_be_immutable
 class ScreenSignIn extends StatelessWidget {
-  const ScreenSignIn({super.key});
+  ScreenSignIn({Key? key}) : super(key: key);
+
+  TextEditingController usernameContoller = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,45 +57,19 @@ class ScreenSignIn extends StatelessWidget {
                       ),
                     ),
                   ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: kTextfield,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          topLeft: Radius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
+                  CommenTextFormField(controller: usernameContoller),
                   const SizedBox(height: 26),
                   const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "     Password*",
                       style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,color: kWhite
-                      ),
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: kWhite),
                     ),
                   ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: kTextfield,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          topLeft: Radius.circular(15),
-                        ),
-                      ),
-                    ),
-                  ),
+                  CommenTextFormField(controller: passwordController),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0, right: 10),
                     child: Row(
@@ -103,7 +83,14 @@ class ScreenSignIn extends StatelessWidget {
               const SizedBox(height: 30),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (usernameContoller.text.trim().isNotEmpty &&
+                        passwordController.text.trim().isNotEmpty) {
+                      FirebaseController().firebaseUserLogin(
+                          usernameContoller.text.trim(),
+                          passwordController.text.trim());
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: kOrange,
                     fixedSize: const Size(300, 50),
@@ -138,7 +125,9 @@ class ScreenSignIn extends StatelessWidget {
                             buttonType: ButtonType.facebook, onPressed: () {}),
                         SignInButton.mini(
                           buttonType: ButtonType.google,
-                          onPressed: () {},
+                          onPressed: () {
+                            FirebaseController().googleLogin(context);
+                          },
                           elevation: 1,
                         ),
                         SignInButton.mini(

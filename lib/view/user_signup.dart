@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:sign_button/sign_button.dart';
 import 'package:sowedane_it_solutions_pvt_ltd/constant/colors.dart';
+import 'package:sowedane_it_solutions_pvt_ltd/controller/fiebase_auth_controller.dart';
+import 'package:sowedane_it_solutions_pvt_ltd/view/widgets/commen_textform_field.dart';
 
 class ScreenSignUp extends StatefulWidget {
   const ScreenSignUp({super.key});
@@ -10,17 +14,21 @@ class ScreenSignUp extends StatefulWidget {
 }
 
 class _ScreenSignUpState extends State<ScreenSignUp> {
-  bool value = false;
+  bool checkboxValue = false;
+  TextEditingController usernameContoller = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  FirebaseController firebase = FirebaseController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 10.0, top: 14),
+          padding: const EdgeInsets.only(left: 15.0),
           child: ListView(
             children: [
-               const SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               const Text(
@@ -49,135 +57,101 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                 'Enter your information below or login with Create an \naccount',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "     User Name*",
-                    style: TextStyle(
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "     User Name*",
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: kWhite),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: kTextfield,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          topLeft: Radius.circular(15),
-                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 26),
-                  const Text(
-                    "     Email ID*",
-                    style: TextStyle(
+                  CommenTextFormField(controller: usernameContoller),
+                  const SizedBox(height: 20),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "     Email ID*",
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: kWhite),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: kTextfield,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          topLeft: Radius.circular(15),
-                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    "     Password*",
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: kWhite),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: kTextfield,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          topLeft: Radius.circular(15),
-                        ),
-                      ),
+                  CommenTextFormField(controller: emailController),
+                  const SizedBox(height: 20),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "     Password*",
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: kWhite),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(2),
-                    child: Flexible(
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            value: value,
-                            onChanged: (newvalue) {
-                              setState(() {
-                                value = newvalue!;
-                              });
-                            },
-                          ),
-                          const Text(
-                            'I agree to the',
-                            style: TextStyle(
-                                color: kWhite,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const Text(
-                            'Terms & conditions, Privacy Policy ',
-                            style: TextStyle(
-                                color: Colors.orange,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const Text(
-                            'and',
-                            style: TextStyle(
-                                fontSize: 11, fontWeight: FontWeight.bold),
-                          ),
-                          const Text(
-                            ' Fees',
-                            style: TextStyle(
-                                color: Colors.orange,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                  CommenTextFormField(controller: passwordController),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: checkboxValue,
+                        onChanged: (value) {
+                          setState(() {
+                            checkboxValue = value!;
+                          });
+                        },
                       ),
-                    ),
-                  )
+                      const Text(
+                        'I agree to the',
+                        style: TextStyle(
+                            color: kWhite,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const Text(
+                        'Terms & conditions, Privacy Policy ',
+                        style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const Text(
+                        'and',
+                        style: TextStyle(
+                            fontSize: 11, fontWeight: FontWeight.bold),
+                      ),
+                      const Text(
+                        ' Fees',
+                        style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
                 ],
               ),
               //<<<<<<<<<<<<<<<<<<<<<<<<<SIGN UP>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+              const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    final username = usernameContoller.text.trim();
+                    final email = emailController.text.trim();
+                    final password = passwordController.text.trim();
+
+                    if (username.isNotEmpty &&
+                        email.isNotEmpty &&
+                        password.isNotEmpty) {
+                      await firebase.firebseUserRegister(
+                          username, email, password);
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: kOrange,
                     fixedSize: const Size(300, 50),
@@ -186,7 +160,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                     ),
                   ),
                   child: const Text(
-                    'SIGN UP',
+                    'SIGN IN',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -212,7 +186,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                             buttonType: ButtonType.facebook, onPressed: () {}),
                         SignInButton.mini(
                           buttonType: ButtonType.google,
-                          onPressed: () {},
+                          onPressed: () async {
+                            await firebase.googleLogin(context);
+                          },
                           elevation: 1,
                         ),
                         SignInButton.mini(

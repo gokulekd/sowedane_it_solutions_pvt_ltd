@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:sowedane_it_solutions_pvt_ltd/constant/colors.dart';
+import 'package:sowedane_it_solutions_pvt_ltd/view/user_signin.dart';
+import 'package:sowedane_it_solutions_pvt_ltd/view/user_signup.dart';
 
 class ScreenSignupLoginNavigate extends StatelessWidget {
   const ScreenSignupLoginNavigate({Key? key}) : super(key: key);
@@ -41,7 +44,9 @@ class ScreenSignupLoginNavigate extends StatelessWidget {
                 height: 40,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(() => ScreenSignIn());
+                },
                 style: ElevatedButton.styleFrom(
                   primary: kBlue,
                   fixedSize: const Size(350, 50),
@@ -55,7 +60,9 @@ class ScreenSignupLoginNavigate extends StatelessWidget {
                 height: 40,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(() => const ScreenSignUp());
+                },
                 style: ElevatedButton.styleFrom(
                   primary: kWhite,
                   fixedSize: const Size(350, 50),
